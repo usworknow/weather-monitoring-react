@@ -19,6 +19,13 @@ Things that assess:
 - Data caching.
 - Async request handling practices.
 
+Tech Stacks used.
+- react v16.7.0
+- react-redux v6.0.0 
+- redux-persist v5.10.0
+- axios v0.21.1
+- React UI framework: material-ui v4.11.2
+ 
 ## Available Scripts
 
 In the project directory, you can run:
