@@ -26,7 +26,7 @@ Tech Stacks used.
 - axios v0.21.1
 - React UI framework: material-ui v4.11.2
 
-# To OpenWeatherApi receives as little requests as possible, I handled service/api.js to improve it.
+### To OpenWeatherApi receives as little requests as possible, I handled service/api.js to improve it.
 
 ## Available Scripts
 
