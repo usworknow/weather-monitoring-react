@@ -25,7 +25,9 @@ Tech Stacks used.
 - redux-persist v5.10.0
 - axios v0.21.1
 - React UI framework: material-ui v4.11.2
- 
+
+To OpenWeatherApi receives as little requests as possible, I handled service/api.js to improve it.
+
 ## Available Scripts
 
 In the project directory, you can run:
