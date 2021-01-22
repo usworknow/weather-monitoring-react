@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { makeStyles, Card, CardContent, CardMedia, CardActionArea, Typography, Grid } from '@material-ui/core';
+import { makeStyles, Card, CardContent, CardMedia, CardActionArea, Typography, Grid, CircularProgress } from '@material-ui/core';
 import { saveWeatherInfo } from 'actions';
 import { getForecast } from 'service';
 
@@ -45,11 +45,16 @@ const useStyles = makeStyles({
         left: 60,
         fontSize: 30,
         color: 'white'
+    },
+    spinner: {
+        display: 'flex',
+        margin: '50px auto'
     }
 });
 
 const WeatherList = (props) => {
     const { user, saveWeatherInfo } = props;
+    const [ isLoading, setIsLoading ] = useState(true);
     const classes = useStyles();
     const backgroundColors = [
         {
@@ -83,6 +88,7 @@ const WeatherList = (props) => {
                 const tiles = Object.values(groupByDays(data.list));
                 const forcastTitles = tiles.length > 5 ? tiles.slice(0, 5) : tiles;
                 saveWeatherInfo(forcastTitles);
+                setIsLoading(false);
             });
     }, [saveWeatherInfo, user.location, user.name]);
 
@@ -137,42 +143,45 @@ const WeatherList = (props) => {
 
     return (
         <React.Fragment>
-            <header className={classes.header}>
-                <Typography component="p" className={classes.title}>
-                    Hi, {user.name}
-                </Typography>
-                <Typography component="span" className={classes.subTitle}>
-                    Weather forecast: {user.location} for the next 5 days
-                </Typography>
-            </header>
-            <Grid container justify="center" spacing={3} className={classes.root}>
-                {weatherListInfos.map((item, index) => (
-                    <Grid item xs={2} key={index}>
-                        <Card className={classes.cardItem}>
-                            <CardActionArea>
-                                <CardMedia
-                                    className={classes.media}
-                                    style={{ background: `linear-gradient(135deg, ${backgroundColors[index].from} 25%, ${backgroundColors[index].to})` }}
-                                    title="Contemplative Reptile"
-                                >
-                                    <Typography gutterBottom component="p" className={classes.degree}>
-                                        {item.degree}
-                                    </Typography>
-                                    <span className={classes.dot}>&#8451;</span>
-                                </CardMedia>
-                                <CardContent>
-                                    <Typography gutterBottom component="p" className={classes.date}>
-                                        {item.day}
-                                    </Typography>
-                                    <Typography color="textSecondary" component="p">
-                                        {item.date}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+            {isLoading && <CircularProgress className={classes.spinner} />}
+            {!isLoading && <>
+                <header className={classes.header}>
+                    <Typography component="p" className={classes.title}>
+                        Hi, {user.name}
+                    </Typography>
+                    <Typography component="span" className={classes.subTitle}>
+                        Weather forecast: {user.location} for the next 5 days
+                    </Typography>
+                </header>
+                <Grid container justify="center" spacing={3} className={classes.root}>
+                    {weatherListInfos.map((item, index) => (
+                        <Grid item xs={2} key={index}>
+                            <Card className={classes.cardItem}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        className={classes.media}
+                                        style={{ background: `linear-gradient(135deg, ${backgroundColors[index].from} 25%, ${backgroundColors[index].to})` }}
+                                        title="Contemplative Reptile"
+                                    >
+                                        <Typography gutterBottom component="p" className={classes.degree}>
+                                            {item.degree}
+                                        </Typography>
+                                        <span className={classes.dot}>&#8451;</span>
+                                    </CardMedia>
+                                    <CardContent>
+                                        <Typography gutterBottom component="p" className={classes.date}>
+                                            {item.day}
+                                        </Typography>
+                                        <Typography color="textSecondary" component="p">
+                                            {item.date}
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            </>}
         </React.Fragment>
     )
 }
