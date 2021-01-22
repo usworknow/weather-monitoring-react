@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Poppins-Bold';
+    src: local('Poppins-Bold'), url(./fonts/Poppins/Poppins-Bold.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Poppins-Light';
+    src: local('Poppins-Light'), url(./fonts/Poppins/Poppins-Light.ttf) format('truetype');
+}
+
+p {
+    font-family: 'Poppins-Bold' !important;
+}
+
+span {
+    font-family: 'Poppins-Light' !important;
+    color: #55506B
+}
